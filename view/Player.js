@@ -126,6 +126,6 @@ Player.prototype.setPosition = function(left, top) {
 }
 
 Player.prototype.fallDown = function() {
-	this.sprite.graphics.fillStyle = "rgba(0,0,0,1)";
+	this.sprite.graphics.fillStyle = "rgba(240,0,0,0.3)";
 	this.sprite.graphics.fillRect(this.left, this.top, TILE_SIZE, TILE_SIZE);
 }

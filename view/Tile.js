@@ -145,6 +145,13 @@ Tile.prototype.prefetchImages = function() {
 
 };
 
-Tile.prototype.prefetchImages();
+Tile.prototype.setImages = function() {
+	Tile.prototype.isImagesLoaded = true;
+	for(var key in TileState.properties) {
+		TileState.properties[key].image = assetManager.getAsset(TileState.properties[key].image);
+	}
+}
+
+//Tile.prototype.prefetchImages();
 
 
