@@ -55,3 +55,14 @@ FloorMap.prototype.renderEvery = function(millis) {
 		map.render();
 	}, millis);
 };
+
+FloorMap.prototype.isSatisfied = function() {
+	for (var row = 0; row < this.height; row++) {
+		for (var col = 0; col < this.width; col++) {
+			if (this.tiles[row][col].state === TileState.CLEAN) {
+				return false;
+			}
+		}
+	}
+	return true;
+};
