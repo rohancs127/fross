@@ -40,7 +40,6 @@ function FloorMap(level, canvas) {
 }
 
 FloorMap.prototype.render = function() {
-	console.log("hi");
 	for (var row = 0; row < this.height; row++) {
 		for (var col = 0; col < this.width; col++) {
 			this.tiles[row][col].update();
