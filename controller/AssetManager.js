@@ -3,6 +3,7 @@ function AssetManager() {
 	this.assetQueue = [];
 	this.processed = 0;
 	this.completionHandler = {};
+	this.downloadedHandler = {};
 }
 
 AssetManager.prototype.pushAssetURL = function(url) {
@@ -21,9 +22,11 @@ AssetManager.prototype.downloadAssets = function() {
 		var url = this.assetQueue[i];
 		curImg.addEventListener('error', function() {
 			++manager.processed;
+			manager.downloadedHandler();
 		});
 		curImg.addEventListener('load', function() {
 			++manager.processed;
+			manager.downloadedHandler();
 			if(manager.processed === manager.numOfAssets) {
 				manager.uponCompletionHandler();
 			}
@@ -31,6 +34,10 @@ AssetManager.prototype.downloadAssets = function() {
 		curImg.src = url;
 		this.cache[url] = {'asset' : curImg};
 	}
+}
+
+AssetManager.prototype.setDownloadedHandler = function(fn) {
+	this.downloadedHandler = fn;
 }
 
 AssetManager.prototype.setCompletionHandler = function(fn) {

@@ -6,8 +6,8 @@ function FloorMap(level, canvas, left, top) {
 	var mapData = mapStore.getMap(level);
 	var height = mapData.length;
 	var width = (height > 0) ? mapData[0].length : 0;
-	this.left = left;
-	this.top = top;
+	this.left = (1024 - width * TILE_SIZE)/2;
+	this.top = (640 - height * TILE_SIZE)/2;
 	this.height = height;
 	this.width = width;
 	this.tiles = new Array(height);
@@ -91,31 +91,48 @@ FloorMap.prototype.getFinishingPosition = function() {
 };
 
 FloorMap.prototype.willStepOn = function(left, top, width, height) {
+	if(this.left -20  > left || this.top -20 > top || this.left + (this.width - 1) * TILE_SIZE + 20 < left || this.top + (this.height - 1) * TILE_SIZE + 20 < top) return false;
 	for (var i = 0; i < this.height; ++i) {
 		for (var j = 0; j < this.width; ++j) {
 			var tileTop = i * TILE_SIZE + this.top + 8;
 			var tileLeft = j * TILE_SIZE + this.left + 8;
-			var isContained = true;
-			if(tileTop <= top) {
-				if(tileTop + TILE_SIZE - 16 < top) isContained = false;
-			} else {
-				if(top + height < tileTop) isContained = false;
-			}
-			if(tileLeft <= left) {
-				if(tileLeft + TILE_SIZE - 16 < left) isContained = false;
-			} else {
-				if(left + width < tileLeft) isContained = false;
-			}
+			var isContained = this.collisionWith(tileLeft, tileTop, left, top, width, height);
 			if(isContained) {
 				if (this.tiles[i][j].isBrokenOrBlocked()) return false;
-				else {
-					this.tiles[i][j].stepIn();
-				}
 			}
 		}
 	}
 	return true;
 };
+
+FloorMap.prototype.isSteppingOn = function(left, top, width, height) {
+	for (var i = 0; i < this.height; ++i) {
+		for (var j = 0; j < this.width; ++j) {
+			var tileTop = i * TILE_SIZE + this.top + 8;
+			var tileLeft = j * TILE_SIZE + this.left + 8;
+			var isContained = this.collisionWith(tileLeft, tileTop, left, top, width, height);
+			if(isContained) {
+				this.tiles[i][j].stepIn();
+				return;
+			}
+		}
+	}
+}
+
+FloorMap.prototype.collisionWith = function(tileLeft, tileTop, left, top, width, height) {
+	var isContained = true;
+	if(tileTop <= top) {
+		if(tileTop + TILE_SIZE - 16 < top) isContained = false;
+	} else {
+		if(top + height < tileTop) isContained = false;
+	}
+	if(tileLeft <= left) {
+		if(tileLeft + TILE_SIZE - 16 < left) isContained = false;
+	} else {
+		if(left + width < tileLeft) isContained = false;
+	}
+	return isContained;
+}
 
 FloorMap.prototype.isFinishTile = function(x, y) {
 	// body...
