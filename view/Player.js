@@ -36,7 +36,7 @@ Sprite.prototype.render = function() {
 							this.frame.width,
 							this.frame.height,
 							this.left,
-							this.top,
+							this.top-5,
 							this.width,
 							this.height);
 }
@@ -120,78 +120,12 @@ Player.prototype.frameLogic = function() {
 	}
 }
 
-
-///testing
-
-var command = {};
-var player;
-var display;
-var gameloop;
-var assetManager;
-document.addEventListener('DOMContentLoaded', function(){
-	display = document.getElementById('display');
-	assetManager = new AssetManager();
-	assetManager.pushAssetURL(PLAYER_ASSET_URL);
-	assetManager.setCompletionHandler(startTest);
-	assetManager.downloadAssets();
-
-});
-
-function startTest() {
-	PLAYER_ASSET = assetManager.getAsset(PLAYER_ASSET_URL);
-	player = new Player(new Sprite(display.getContext('2d'), PLAYER_ASSET, 100, 100, TILE_SIZE, TILE_SIZE), 100, 100);
-	document.addEventListener('keydown', function(e) {
-		if(e.which == 37) {
-			command['LEFT'] = true;
-		} else if (e.which == 38) {
-			command['UP'] = true;
-		} else if (e.which == 39) {
-			command['RIGHT'] = true;
-		} else if (e.which == 40) {
-			command['DOWN'] = true;
-		}
-	});
-	document.addEventListener('keyup', function(e) {
-		if(e.which == 37) {
-			delete command['LEFT'];
-		} else if (e.which == 38) {
-			delete command['UP'];
-		} else if (e.which == 39) {
-			delete command['RIGHT'];
-		} else if (e.which == 40) {
-			delete command['DOWN'];
-		}
-	})
-	gameloop = setInterval(function() {
-		commandHandler();
-		render();
-	}, 1000/60)
+Player.prototype.setPosition = function(left, top) {
+	this.left = left;
+	this.top = top;
 }
 
-function commandHandler() {
-	var notMoving = true;
-	if(command['UP']) {
-		notMoving = false;
-		player.moveUp();
-	}
-	if(command['DOWN']) {
-		notMoving = false;
-		player.moveDown();
-	}
-	if(command['RIGHT']) {
-		notMoving = false;
-		player.moveRight();
-	}
-	if(command['LEFT']) {
-		notMoving = false;
-		player.moveLeft();
-	}
-	if(notMoving) {
-		player.stopMoving();
-	}
-}
-
-function render(){
-	display.getContext('2d').clearRect(0, 0, 1024, 640);
-	player.render();
+Player.prototype.fallDown = function() {
+	this.sprite.graphics.fillStyle = "rgba(0,0,0,1)";
+	this.sprite.graphics.fillRect(this.left, this.top, TILE_SIZE, TILE_SIZE);
 }

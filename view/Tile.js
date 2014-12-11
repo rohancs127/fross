@@ -106,6 +106,9 @@ Tile.prototype.logStateChange = function() {
 	this.lastStateChange = Date.now();
 };
 
+Tile.prototype.isBrokenOrBlocked = function() {
+	return (this.state === TileState.BROKEN || this.state === TileState.BLOCKED);
+}
 
 
 // STATIC METHODS AND VARIABLES
@@ -126,7 +129,4 @@ Tile.prototype.prefetchImages = function() {
 
 Tile.prototype.prefetchImages();
 
-// DEBUGGING VARIABLES
-
-var canvas = document.getElementById("gp");
 
