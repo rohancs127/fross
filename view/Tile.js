@@ -1,11 +1,12 @@
 "use strict";
 
-var TILE_SIZE = 32;
+var TILE_SIZE = 64;
 
 var TileState = {
 	CLEAN: 1,
 	CRACKED: 2,
 	BROKEN: 3,
+	BLOCKED: 4,
 	properties: {
 		1: {
 			time: "clean",
@@ -15,11 +16,16 @@ var TileState = {
 		2: {
 			name: "cracked",
 			image: "assets/Tile_Cracked.png",
-			lifetime: 3000
+			lifetime: 2000
 		},
 		3: {
 			name: "broken",
 			image: "assets/Tile_Broken.png",
+			lifetime: Infinity
+		},
+		4: {
+			name: "blocked",
+			image: "assets/Tile_Blocked.png",
 			lifetime: Infinity
 		}
 	}
@@ -45,7 +51,7 @@ function Tile(posX, posY, canvas) {
 
 // OBJECT METHODS
 
-Tile.prototype.decrementLifetimeAndUpdateState = function() {
+Tile.prototype.update = function() {
 	var lifetime = TileState.properties[this.state].lifetime;
 	if (lifetime === Infinity) return;
 
@@ -53,10 +59,6 @@ Tile.prototype.decrementLifetimeAndUpdateState = function() {
 	if (currentTime - this.lastStateChange >= lifetime) {
 		this.setState(this.state + 1);
 	}
-};
-
-Tile.prototype.logStateChange = function() {
-	this.lastStateChange = Date.now();
 };
 
 Tile.prototype.setState = function(tileState) {
@@ -68,6 +70,9 @@ Tile.prototype.setState = function(tileState) {
 		this.logStateChange();
 	} else if (tileState === TileState.BROKEN) { 
 		this.state = TileState.BROKEN;
+		this.logStateChange();
+	} else if (tileState === TileState.BLOCKED) {
+		this.state = TileState.BLOCKED;
 		this.logStateChange();
 	} else { 
 		console.error("The following object is not a valid TileState: ", tileState); 
@@ -96,6 +101,11 @@ Tile.prototype.stepOut = function() {
 	this.setState(TileState.BROKEN);
 };
 
+//internal method. do not use
+Tile.prototype.logStateChange = function() {
+	this.lastStateChange = Date.now();
+};
+
 
 
 // STATIC METHODS AND VARIABLES
@@ -118,5 +128,5 @@ Tile.prototype.prefetchImages();
 
 // DEBUGGING VARIABLES
 
-//var canvas = document.getElementById("gp");
+var canvas = document.getElementById("gp");
 
