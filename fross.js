@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function downloadedHandler() {
 	var progress = (assetManager.processed / assetManager.numOfAssets) * 100;
-	start.innerHTML = 'loading: ' + progress + "%";
+	start.innerHTML = 'loading: ' + parseInt(progress) + "%";
 }
 
 function gameIsReady() {
