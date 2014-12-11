@@ -39,7 +39,6 @@ function FloorMap(level, canvas, left, top) {
 			this.tiles[row][col] = tile;
 		}
 	}
-
 }
 
 FloorMap.prototype.render = function() {

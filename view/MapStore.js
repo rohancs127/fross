@@ -8,7 +8,9 @@ MapStore.prototype.getMap = function(level) {
 	if (level in this.data) {
 		return this.data[level];
 	} else {
-		throw new Error("No such map available!");
+		//throw new Error("No such map available!");
+		//jaman gini masa error?
+		return MapGenerator.prototype.generateMap();
 	}
 };
 
@@ -27,7 +29,7 @@ MapStore.prototype.data = {
 		"....",
 		".SX.",
 		"...."],
-	4: ["...........",
+	4: [".........F.",
 		".....X...X.",
 		"...........",
 		"X....S..X.."],
@@ -43,10 +45,12 @@ MapStore.prototype.data = {
 		"......",
 		".X..F.",
 		"......"],
-	7: [".....",
+	7: ["...F.",
 		"...X.",
 		"..S..",
 		".XX..",
 		".....",
-		"XX..X"]
+		"XX..X"],
+	8: ["",
+		""]
 };
