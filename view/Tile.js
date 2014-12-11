@@ -1,3 +1,4 @@
+"use strict";
 
 var TILE_SIZE = 32;
 
@@ -113,10 +114,9 @@ Tile.prototype.prefetchImages = function() {
 
 };
 
-
+Tile.prototype.prefetchImages();
 
 // DEBUGGING VARIABLES
 
-var canvas = document.getElementById("gp");
-Tile.prototype.prefetchImages();
+//var canvas = document.getElementById("gp");
 
