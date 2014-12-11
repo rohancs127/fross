@@ -47,6 +47,9 @@ function gameIsReady() {
 	startButton.addEventListener('click', function() {
 		startButton.style.setProperty('z-index', -1);
 		startButton.style.setProperty('opacity', 0);
+		var instruction = document.getElementById('instruction');
+		instruction.style.setProperty('opacity', 0);
+		instruction.style.setProperty('z-index', -1);
 		initializeGame();
 	})
 }
@@ -121,7 +124,7 @@ function commandHandler() {
 		}
 	}
 	if(command['DOWN']) {
-		if(collisionCheck(BOUNDING_RECT_OFFSET, -BOUNDING_RECT_OFFSET + 10, BOUNDING_RECT_SIZE, BOUNDING_RECT_SIZE)) {
+		if(collisionCheck(BOUNDING_RECT_OFFSET, -BOUNDING_RECT_OFFSET + 15, BOUNDING_RECT_SIZE, BOUNDING_RECT_SIZE)) {
 			notMoving = false;
 			player.moveDown();
 		}

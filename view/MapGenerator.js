@@ -11,8 +11,8 @@ function MapGenerator() {
 }
 
 MapGenerator.prototype.generateMap = function() {
-	var height = getRandomInt(4, 10);
-	var width = getRandomInt(4, 10);
+	var height = getRandomInt(5, 10);
+	var width = getRandomInt(5, 10);
 	var startRow = getRandomInt(0, height);
 	var startCol = getRandomInt(0, width);
 	var visited = new Array(height);
