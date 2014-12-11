@@ -29,6 +29,7 @@ function FloorMap(level, canvas, left, top) {
 					this.startPos = [row, col];
 					break;
 				case 'F':
+					tile.setState(TileState.FINISH_LOCKED);
 					this.finishPos = [row, col];
 					break;
 				default:
@@ -42,6 +43,10 @@ function FloorMap(level, canvas, left, top) {
 }
 
 FloorMap.prototype.render = function() {
+	if (this.isSatisfied()) {
+		var f = this.finishPos;
+		this.tiles[f[0]][f[1]].setState(TileState.FINISH_UNLOCKED);
+	}
 	for (var row = 0; row < this.height; row++) {
 		for (var col = 0; col < this.width; col++) {
 			this.tiles[row][col].update();
@@ -75,7 +80,7 @@ FloorMap.prototype.getStartingPosition = function() {
 		"left": left,
 		"top": top,
 	}
-}
+};
 
 FloorMap.prototype.getFinishingPosition = function() {
 	var left = this.finishPos[1] * TILE_SIZE + this.left;
@@ -84,7 +89,7 @@ FloorMap.prototype.getFinishingPosition = function() {
 		"left": left,
 		"top": top,
 	}
-}
+};
 
 FloorMap.prototype.willStepOn = function(left, top, width, height) {
 	for (var i = 0; i < this.height; ++i) {
@@ -111,4 +116,16 @@ FloorMap.prototype.willStepOn = function(left, top, width, height) {
 		}
 	}
 	return true;
-}
+};
+
+FloorMap.prototype.isFinishTile = function(x, y) {
+	// body...
+};
+
+FloorMap.prototype.isBrokenTile = function(x, y) {
+	// body...
+};
+
+FloorMap.prototype.coordinateToIndex = function(x, y) {
+	
+};

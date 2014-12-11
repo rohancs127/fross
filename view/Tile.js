@@ -7,6 +7,8 @@ var TileState = {
 	CRACKED: 2,
 	BROKEN: 3,
 	BLOCKED: 4,
+	FINISH_LOCKED: 5,
+	FINISH_UNLOCKED: 6,
 	properties: {
 		1: {
 			time: "clean",
@@ -26,6 +28,16 @@ var TileState = {
 		4: {
 			name: "blocked",
 			image: "assets/Tile_Blocked.png",
+			lifetime: Infinity
+		},
+		5: {
+			name: "finish_locked",
+			image: "assets/Tile_Finish_Locked.png",
+			lifetime: Infinity
+		},
+		6: {
+			name: "finish_unlocked",
+			image: "assets/Tile_Finish_Unlocked.png",
 			lifetime: Infinity
 		}
 	}
@@ -74,6 +86,12 @@ Tile.prototype.setState = function(tileState) {
 	} else if (tileState === TileState.BLOCKED) {
 		this.state = TileState.BLOCKED;
 		this.logStateChange();
+	} else if (tileState === TileState.FINISH_LOCKED) {
+		this.state = TileState.FINISH_LOCKED;
+		this.logStateChange();
+	} else if (tileState === TileState.FINISH_UNLOCKED) {
+		this.state = TileState.FINISH_UNLOCKED;
+		this.logStateChange();
 	} else { 
 		console.error("The following object is not a valid TileState: ", tileState); 
 	}
@@ -107,7 +125,7 @@ Tile.prototype.logStateChange = function() {
 };
 
 Tile.prototype.isBrokenOrBlocked = function() {
-	return (this.state === TileState.BROKEN || this.state === TileState.BLOCKED);
+	return (this.state === TileState.BROKEN || this.state === TileState.BLOCKED || this.state === TileState.FINISH_LOCKED);
 }
 
 
