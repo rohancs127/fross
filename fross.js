@@ -55,7 +55,8 @@ function initializeGame() {
 	initializeEventListener();
 	initializePlayer(0, 0);
 	initializeMap(MAP_LEFT, MAP_TOP);
-
+	command = {};
+	lastIdle = Date.now();
 	gameloop = setInterval(function() {
 		gameLogic();
 	}, 1000/60)
@@ -73,6 +74,7 @@ function initializeMap(left, top) {
 
 function setMapLevel(level, left, top) {
 	levelBoard.innerHTML = 'Level '+level;
+	mapDisplay.getContext('2d').clearRect(0,0,1024,640);
 	gameMap = new FloorMap(level, mapDisplay, left, top);
 	var startPos = gameMap.getStartingPosition();
 	player.setPosition(startPos.left, startPos.top);
