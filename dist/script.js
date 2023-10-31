@@ -15,6 +15,10 @@ var announcement;
 var startButton;
 var lastIdle;
 var levelBoard;
+var leftButton;
+var upButton
+var rightButton;
+var downButton;
 
 document.addEventListener('DOMContentLoaded', function(){
 	display = document.getElementById('display');
@@ -55,6 +59,7 @@ function gameIsReady() {
 }
 
 function initializeGame() {
+	initializeControlKeys();
 	initializeEventListener();
 	initializePlayer(0, 0);
 	initializeMap(MAP_LEFT, MAP_TOP);
@@ -63,6 +68,20 @@ function initializeGame() {
 	gameloop = setInterval(function() {
 		gameLogic();
 	}, 1000/60)
+}
+
+function initializeControlKeys(){
+	document.getElementById('control-keys').innerHTML = `
+	<div><button id="control-up">Up</button></div>
+	<div id="middle-row"><button id="control-left">Left</button>
+		 <button id="control-right">Right</button></div>
+	<div><button id = "control-down">Down</button><div>`;
+
+	leftButton = document.getElementById('control-left');
+	upButton = document.getElementById('control-up');
+	rightButton = document.getElementById('control-right');
+	downButton = document.getElementById('control-down');
+
 }
 
 function initializePlayer(left, top) {
@@ -107,6 +126,83 @@ function initializeEventListener() {
 			delete command['DOWN'];
 		}
 	})
+
+
+	//mouse click
+	leftButton.addEventListener('mousedown', () => {
+		command['LEFT'] = true;
+	});
+	
+	leftButton.addEventListener('mouseup', () => {
+		delete command['LEFT'];
+	});
+	
+	upButton.addEventListener('mousedown', () => {
+		command['UP'] = true;
+	});
+	
+	upButton.addEventListener('mouseup', () => {
+		delete command['UP'];
+	});
+	
+	rightButton.addEventListener('mousedown', () => {
+		command['RIGHT'] = true;
+	});
+	
+	rightButton.addEventListener('mouseup', () => {
+		delete command['RIGHT'];
+	});
+	
+	downButton.addEventListener('mousedown', () => {
+		command['DOWN'] = true;
+	});
+	
+	downButton.addEventListener('mouseup', () => {
+		delete command['DOWN'];
+	});
+
+
+	//touch
+
+	leftButton.addEventListener('touchstart', () => {
+		event.preventDefault();
+		command['LEFT'] = true;
+	});
+	
+	leftButton.addEventListener('touchend', () => {
+		event.preventDefault();
+		delete command['LEFT'];
+	});
+	
+	upButton.addEventListener('touchstart', () => {
+		event.preventDefault();
+		command['UP'] = true;
+	});
+	
+	upButton.addEventListener('touchend', () => {
+		event.preventDefault();
+		delete command['UP'];
+	});
+	
+	rightButton.addEventListener('touchstart', () => {
+		event.preventDefault();
+		command['RIGHT'] = true;
+	});
+	
+	rightButton.addEventListener('touchend', () => {
+		event.preventDefault();
+		delete command['RIGHT'];
+	});
+	
+	downButton.addEventListener('touchstart', () => {
+		event.preventDefault();
+		command['DOWN'] = true;
+	});
+	
+	downButton.addEventListener('touchend', () => {
+		event.preventDefault();
+		delete command['DOWN'];
+	});
 }
 
 function gameLogic() {
@@ -209,3 +305,68 @@ function showRestartButton() {
 function restartGame() {
 	initializeGame();
 }
+
+// ----------------------------------------------------------------------------------------------------------------
+
+// Touch Event Listeners
+document.addEventListener('touchstart', handleTouchStart, false);
+document.addEventListener('touchmove', handleTouchMove, false);
+document.addEventListener('touchend', handleTouchEnd, false);
+
+let xDown = null;
+let yDown = null;
+
+function handleTouchStart(e) {
+    const firstTouch = e.touches[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+}
+
+function handleTouchMove(e) {
+    if (!xDown || !yDown) {
+        return;
+    }
+
+    const xUp = e.touches[0].clientX;
+    const yUp = e.touches[0].clientY;
+
+    const xDiff = xDown - xUp;
+    const yDiff = yDown - yUp;
+
+    // Check for the minimum threshold to trigger movement
+    const minSwipeDistance = 20; // Adjust this value to your desired sensitivity
+
+    if (Math.abs(xDiff) > minSwipeDistance || Math.abs(yDiff) > minSwipeDistance) {
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            if (xDiff > 0) {
+                // Swipe left
+                command['LEFT'] = true;
+            } else {
+                // Swipe right
+                command['RIGHT'] = true;
+            }
+        } else {
+            if (yDiff > 0) {
+                // Swipe up
+                command['UP'] = true;
+            } else {
+                // Swipe down
+                command['DOWN'] = true;
+            }
+        }
+        // Reset starting point for the next swipe calculation
+        xDown = null;
+        yDown = null;
+    }
+}
+
+function handleTouchEnd() {
+    // Clear commands when touch ends
+    delete command['LEFT'];
+    delete command['RIGHT'];
+    delete command['UP'];
+    delete command['DOWN'];
+    xDown = null;
+    yDown = null;
+}
+
