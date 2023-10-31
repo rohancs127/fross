@@ -2,6 +2,7 @@ body {
 	margin: 0;
 	padding: 0;
 	background-color: black;
+	overflow-x: hidden;
 }
 
 
@@ -13,6 +14,8 @@ body {
 	top: 30px;
 	z-index: 1;
 }
+
+
 
 #mapdisplay {
 	z-index: 0;
@@ -114,3 +117,92 @@ body {
 	-webkit-transition: opacity 0.3s;
 	-moz-transition: opacity 0.3s;
 }
+
+@media (max-width:950px){
+	#display, #mapdisplay {
+		top:200px;
+		width: 700px;
+		
+	}
+
+	#start {
+		top: 382px;
+		font-size: 3em;
+	}
+
+	#instruction {
+		position: absolute;
+		top:450px;
+		font-size: 1em;
+	}
+
+	#announcement{
+		top:370px;
+		font-size: 3em;
+	}
+
+	#level{
+		font-size: 3em;
+	}
+}
+
+@media (max-width:700px){
+	#display, #mapdisplay {
+		top:200px;
+		width: 500px;
+		
+	}
+
+	#start {	
+		top: 328px;
+		font-size: 2em;
+	}
+
+	#instruction {
+		position: absolute;
+		top:400px;
+	}
+
+	#announcement{
+		top:330px;
+		font-size: 2em;
+	}
+
+	#level{
+		font-size: 2em;
+	}
+
+}
+
+@media (max-width:500px){	
+	#display, #mapdisplay {
+		top:200px;
+		width: 320px;
+		
+	}
+
+	#start {	
+		top: 281px;
+		font-size: 1em;
+	}
+
+	#instruction {
+		position: absolute;
+		top:330px;
+		font-size: 0.8em;
+	}
+
+	#announcement{
+		top:285px;
+		font-size: 1em;
+	}
+	
+	#level{
+		font-size: 1.5em;
+	}
+
+	#footer{
+		font-size: 0.8em;
+	}
+}
+
