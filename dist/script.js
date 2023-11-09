@@ -71,6 +71,8 @@ function initializeGame() {
 }
 
 function initializeControlKeys(){
+	if(matchMedia("(pointer: coarse)").matches)
+{
 	document.getElementById('control-keys').innerHTML = `
 	<div><button id="control-up">Up</button></div>
 	<div id="middle-row"><button id="control-left">Left</button>
@@ -81,6 +83,7 @@ function initializeControlKeys(){
 	upButton = document.getElementById('control-up');
 	rightButton = document.getElementById('control-right');
 	downButton = document.getElementById('control-down');
+}
 
 }
 
@@ -129,41 +132,42 @@ function initializeEventListener() {
 
 
 	//mouse click
-	leftButton.addEventListener('mousedown', () => {
-		command['LEFT'] = true;
-	});
+	// leftButton.addEventListener('mousedown', () => {
+	// 	command['LEFT'] = true;
+	// });
 	
-	leftButton.addEventListener('mouseup', () => {
-		delete command['LEFT'];
-	});
+	// leftButton.addEventListener('mouseup', () => {
+	// 	delete command['LEFT'];
+	// });
 	
-	upButton.addEventListener('mousedown', () => {
-		command['UP'] = true;
-	});
+	// upButton.addEventListener('mousedown', () => {
+	// 	command['UP'] = true;
+	// });
 	
-	upButton.addEventListener('mouseup', () => {
-		delete command['UP'];
-	});
+	// upButton.addEventListener('mouseup', () => {
+	// 	delete command['UP'];
+	// });
 	
-	rightButton.addEventListener('mousedown', () => {
-		command['RIGHT'] = true;
-	});
+	// rightButton.addEventListener('mousedown', () => {
+	// 	command['RIGHT'] = true;
+	// });
 	
-	rightButton.addEventListener('mouseup', () => {
-		delete command['RIGHT'];
-	});
+	// rightButton.addEventListener('mouseup', () => {
+	// 	delete command['RIGHT'];
+	// });
 	
-	downButton.addEventListener('mousedown', () => {
-		command['DOWN'] = true;
-	});
+	// downButton.addEventListener('mousedown', () => {
+	// 	command['DOWN'] = true;
+	// });
 	
-	downButton.addEventListener('mouseup', () => {
-		delete command['DOWN'];
-	});
+	// downButton.addEventListener('mouseup', () => {
+	// 	delete command['DOWN'];
+	// });
 
 
 	//touch
-
+	if(matchMedia("(pointer: coarse)").matches)
+{
 	leftButton.addEventListener('touchstart', () => {
 		event.preventDefault();
 		command['LEFT'] = true;
@@ -203,6 +207,8 @@ function initializeEventListener() {
 		event.preventDefault();
 		delete command['DOWN'];
 	});
+
+}
 }
 
 function gameLogic() {

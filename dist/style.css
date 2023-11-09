@@ -151,8 +151,8 @@ body {
 
 @media (max-width:950px){
 	#display, #mapdisplay {
-		top:100px;
-		width: 700px;
+		top:40px;
+		width: 900px;
 		
 	}
 
@@ -184,9 +184,9 @@ body {
 
 @media (max-width:700px){
 	#display, #mapdisplay {
-		top:200px;
-		width: 500px;
-		
+		top:108px;
+		width: 800px;
+		left: -10%;
 	}
 
 	#start {	
@@ -212,8 +212,9 @@ body {
 
 @media (max-width:500px){	
 	#display, #mapdisplay {
-		top:200px;
-		width: 320px;
+		top:130px;
+		width: 550px;
+		left: -20%;
 		
 	}
 
